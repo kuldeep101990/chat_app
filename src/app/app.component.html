@@ -1,0 +1,29 @@
+<h1>🤖 Kuldeep's Gen AI App <span><a href="https://ideeprogrammer.com" target="_blank" style="font-size: 12px;text-decoration: none;">
+    Visit Home Website
+  </a></span></h1>
+
+    <div *ngFor="let message of messages(); trackBy: trackById">
+      <pre
+        class="message"
+        [ngClass]="{
+          'from-user': message.fromUser,
+          generating: message.generating
+        }"
+      >
+        {{ message.text }}
+      </pre>
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="sendMessage(form, form.value.message)">
+      <input
+        name="message"
+        placeholder="Type a message"
+        ngModel
+        required
+        autofocus
+        [disabled]="generatingInProgress()"
+      />
+      <button type="submit" [disabled]="generatingInProgress() || form.invalid">
+        Send
+      </button>
+    </form>

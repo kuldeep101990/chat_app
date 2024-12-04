@@ -28,6 +28,14 @@ export class MessageService {
   readonly messages = this._messages.asReadonly();
   readonly generatingInProgress = this._generatingInProgress.asReadonly();
 
+  // Keywords for detecting developer-related and app-specific questions
+  private readonly developerKeywords = [
+    'developed', 'created', 'made', 'program', 'designed', 'built', 'coded',
+  ];
+  private readonly subjectKeywords = [
+    'you', 'this', 'app', 'application', 'system', 'bot', 'software',
+  ];
+
   sendMessage(prompt: string): void {
     this._generatingInProgress.set(true);
 
@@ -39,6 +47,18 @@ export class MessageService {
         fromUser: true,
       },
     ]);
+
+    // Handle developer-related questions
+    const response = this.checkDeveloperQuestion(prompt);
+    if (response) {
+      this._messages.set([
+        ...this._completeMessages(),
+        { id: window.crypto.randomUUID(), text: response, fromUser: false },
+      ]);
+      this._completeMessages.set(this._messages());
+      this._generatingInProgress.set(false);
+      return;
+    }
 
     this.getChatResponseStream(prompt).subscribe({
       next: (message) =>
@@ -91,5 +111,27 @@ export class MessageService {
           generating: true,
         }),
       );
+  }
+
+  private checkDeveloperQuestion(prompt: string): string | null {
+    const tokens = prompt.toLowerCase().split(/\s+/);
+
+    const mentionsDeveloper = tokens.some((token) =>
+      this.developerKeywords.includes(token)
+    );
+    const mentionsApp = tokens.some((token) =>
+      this.subjectKeywords.includes(token)
+    );
+
+    if (mentionsDeveloper && mentionsApp) {
+      // If the question is about your app
+      return 'I was developed by Kuldeep Kaushik.';
+    } else if (mentionsDeveloper && !mentionsApp) {
+      // If the question is about another entity
+      return 'Well, i was developed by Kuldeep Kaushik, though!';
+    }
+
+    // No match for developer-related questions
+    return null;
   }
 }
