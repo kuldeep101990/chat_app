@@ -1,6 +1,6 @@
 # 🤖 Angular Generative AI Demo
 
-[Demo](https://github.com/c-o-l-i-n/ng-generative-ai-demo/assets/40863449/b296b7b6-c6b4-4f83-adcb-de9c98c2c00f)
+https://github.com/kuldeep101990/chat_app
 
 ## 🤔 Why does this matter?
 
@@ -11,7 +11,7 @@ Generative AI is changing the way we interact with technology. As AI chatbots be
 > [!NOTE]  
 > The Gemini API is free, so long as you're willing to share all of your usage data with Google.
 
-1. Run `git clone https://github.com/c-o-l-i-n/ng-generative-ai-demo.git` to clone this repo.
+1. Run `git clone https://github.com/kuldeep101990/chat_app` to clone this repo.
 
 2. Visit the [Google AI Studio](https://aistudio.google.com/app/apikey) to generate an API key.
 
