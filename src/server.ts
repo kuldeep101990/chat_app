@@ -7,6 +7,7 @@ dotenv.config();
 
 const server = express();
 const port = 3000;
+const host = '0.0.0.0'; 
 
 const googleAiStudioApiKey = process.env['GOOGLE_AI_STUDIO_API_KEY'];
 
@@ -21,7 +22,7 @@ const chat = model.startChat();
 server.use(express.text());
 server.use(cors());
 
-server.listen(port, () => {
+server.listen(port,host, () => {
   console.log('Server is running on port', port);
 });
 
